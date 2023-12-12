@@ -27,3 +27,4 @@ jobs
                     skipIfReleaseExists: true
                     tag: "latest"
                     artifacts: "release.tar.gz.foo/ .txt"
+            - bodyfile: body.md
