@@ -22,7 +22,7 @@ jobs
                     force_push_tag: true
                     message: "Latest release"
             - name: Release
-                uses: ncipollo/release-action@v1
+            - uses: ncipollo/release-action@v1
                 with:
                     skipIfReleaseExists: true
                     tag: "latest"
