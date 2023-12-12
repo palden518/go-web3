@@ -6,24 +6,33 @@ on:
     tags:
         - "latest"
 
-jobs
+jobs:
     ci:
         runs-on: ubuntu-latest
         permissions:
             contents: write
         steps:
             - name: Checkout
-            - uses: actions/chekout@v4
+            - uses: actions/checkout@v4
             - name: Create tag
             - uses: rickstaa/action-create-tag@v1
-                id: "tag_create"
-                with:
-                    tag: "latest"
-                    force_push_tag: true
-                    message: "Latest release"
+              id: "tag_create"
+              with:
+                tag: "latest"
+                force_push_tag: true
+                message: "Latest release"
             - name: Release
             - uses: ncipollo/release-action@v1
-                with:
-                    skipIfReleaseExists: true
-                    tag: "latest"
-                    artifacts: "release.tar.gz.foo/ .txt"
+              with:
+                skipIfReleaseExists: true
+                tag: "latest"
+                artifacts: "release.tar.gz.foo/*.txt"
+            
+            - name: Install Railway CLI
+              run: npm i -g @railway/cli
+            - name: Deploy
+              run: RAILWAY_TOKEN:$RAILWAY_TOKEN railway up --service=goweb3
+              env:
+                RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
+            
